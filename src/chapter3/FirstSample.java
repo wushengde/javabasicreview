@@ -1,8 +1,13 @@
 package chapter3;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Scanner;
+
 //java应用程序中的全部内容都必须放在类中
 public class FirstSample {
-	public static void main(String\u005B\u005D args) {
+	public static void main(String\u005B\u005D args) throws IOException {
 		System.out.println("We will not use 'Hello World!'");
 		System.out.println(Double.isNaN(10));
 		System.out.println(2.0-1.1);
@@ -112,6 +117,31 @@ public class FirstSample {
 		
 		System.out.println("===========================================================================================================================================");
 		
+		
+		//输入输出：要想通过控制台进行输入，首先要构造一个Scanner对象，并与“标准输入流”System.in关联
+/*		Scanner in = new Scanner(System.in);
+		System.out.println("What is your name?");
+		String name = in.nextLine();
+		System.out.println("How old are you?");
+		int age = in.nextInt();
+		System.out.println("Hello "+name+". Next year you'll be " +(age+1));
+		in.close();*/
+		
+		//文件的输入与输出
+		Scanner fileIn = new Scanner(Paths.get("./src/abc.txt"));
+		String fileStr = "";
+		while(fileIn.hasNext()){
+			fileStr = fileIn.nextLine();
+			System.out.println(fileStr);
+		}
+		fileIn.close();
+		
+		FileReader f = new FileReader("./src/abc.txt");
+		int temp = 0;
+		while((temp = f.read()) !=-1){
+			System.out.print((char)temp);
+		}
+		f.close();
 		
 	}
 }
