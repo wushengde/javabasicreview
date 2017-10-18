@@ -2,7 +2,9 @@ package chapter3;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Scanner;
 
 //java应用程序中的全部内容都必须放在类中
@@ -128,6 +130,8 @@ public class FirstSample {
 		in.close();*/
 		
 		//文件的输入与输出
+		
+		//读取文件的方式一：
 		Scanner fileIn = new Scanner(Paths.get("./src/abc.txt"));
 		String fileStr = "";
 		while(fileIn.hasNext()){
@@ -136,6 +140,7 @@ public class FirstSample {
 		}
 		fileIn.close();
 		
+		//读取文件的方式二：
 		FileReader f = new FileReader("./src/abc.txt");
 		int temp = 0;
 		while((temp = f.read()) !=-1){
@@ -143,5 +148,114 @@ public class FirstSample {
 		}
 		f.close();
 		
+		//判断String串的每一个字符是否为数字
+		String strParam = "24ab2ab4";
+		System.out.println(strParam);
+		for(int i=0;i<strParam.length();i++){
+			//判断字符是否为数字
+			if(!Character.isDigit(strParam.charAt(i))){
+				System.out.println("false");
+			}else{
+				System.out.println("true");
+			}
+		}
+		
+		System.out.println("===========================================================================================================================================");
+		
+		//大数值：如果基本的整数浮点数不能满足需求时，可以使用java.math包中的两个类：BigInteger与BigDecimal.这两个类可以处理包含任意长度数字序列的数值。
+		
+		//BigInteger类实现了任意精度的整数运算，BigDecimal实现了任意精度的浮点数运算。
+		//使用BigInteger的valueOf()方法可以将普通的数值转换为大数值
+		
+		BigInteger bigNum = BigInteger.valueOf(100);
+		//注意大数值不能使用算术运算符来处理，需要使用大数值类中的方法来实现，如下：
+		BigInteger bigNum2 = bigNum.add(BigInteger.valueOf(200));//加
+		System.out.println(bigNum2);
+		
+		BigInteger big1 = BigInteger.valueOf(1000);
+		BigInteger big2 = big1.subtract(BigInteger.valueOf(500));//减
+		System.out.println(big2);
+		
+		BigInteger biga = BigInteger.valueOf(2);
+		BigInteger bigb = biga.multiply(BigInteger.valueOf(300));//乘
+		System.out.println(bigb);
+		
+		BigInteger bigc = BigInteger.valueOf(999);
+		BigInteger bigd = bigc.divide(BigInteger.valueOf(3));//除，又叫取整、取模
+		System.out.println(bigd);
+		
+		BigInteger bigx = BigInteger.valueOf(10);
+		BigInteger bigy = bigx.mod(BigInteger.valueOf(3));//取余
+		System.out.println(bigy);
+		
+		BigInteger bigm = BigInteger.valueOf(32);
+		int resultx = bigm.compareTo(BigInteger.valueOf(303));//比较两个大数值 若相等则返回0，若此值小于参数中的值返回负数，否则返回正数。 
+		System.out.println(resultx);
+		
+		System.out.println("===========================================================================================================================================");
+		
+		//数组：是一种数据结构，用来存放同一数据类型值得集合。通过一个整型下标可以访问数组中的每一个值
+		
+		//声明数组变量时，需要指出数组类型和数组变量的名字。如下：
+		int[] arr = new int[100];//创建了一个可以存100个整型数的数组
+		for(int i= 0;i < 100;i++)arr[i]=i;
+		for(int arra :arr){
+			System.out.print(arra+" ");
+		}
+		System.out.println();
+		
+		//数组初始化：创建并赋值
+		String[] arrStr = {"Hello ","World ","!"};
+		for(String strcc :arrStr){
+			System.out.print(strcc);
+		}
+		System.out.println();
+		
+		//数组的排序：可以使用Arrays类中的sort()方法
+		int[] arrInt = {25,35,16,18,360,72,180,90,24};
+		System.out.println(Arrays.toString(arrInt));
+		Arrays.sort(arrInt);
+		for(int arrx :arrInt){
+			System.out.print(arrx+" ");
+		}
+		System.out.println();
+		
+		//随机数的产生方式：Math.random()方法,此方法返回0到1之间(包含0不包含1)的随机浮点数，用n乘以这个浮点数，可以得到0 到 n-1之间的随机浮点数
+		int random = (int) (Math.random()*10);//需要将浮点数转为int类型
+		System.out.println(random);
+		
+		
+		//Arrays:数组的工具类,其中常用的方法如下：
+		
+		Arrays.sort(arrInt);//排序方法
+		String arrStr1 = Arrays.toString(arrInt);//返回数组中元素的字符串形式，这些元素被放到[]中，并用逗号隔开。
+		System.out.println(arrStr1);
+		
+		int[] arrNew1 = Arrays.copyOf(arrInt, 3);//返回从索引0处开始到索引3处结束期间各元素组成的数组，包含索引0 不包含3
+		int[] arrNew2 = Arrays.copyOfRange(arrInt, 1, 3);//返回范围性数组，包含左边界，不包含右边界
+		System.out.println(Arrays.toString(arrNew1));
+		System.out.println(Arrays.toString(arrNew2));
+		
+		Arrays.fill(arrInt, 22);//将数组中的所有元素值改为22,fill(type[] a,type v)v的类型必须跟a变量类型一致。
+		System.out.println(Arrays.toString(arrInt));
+		
+		boolean bool = Arrays.equals(arrInt, arrNew1);//比较两个数组是否相等，必须是对应的索引对应的值都相等才返回true
+		System.out.println(bool);
+		
+		
+		String strIsNum = "123"; 
+		FirstSample firstSample = new FirstSample();
+		System.out.println(firstSample.isNumber(strIsNum));
+		
+	}
+	
+	//java中判断输入的字符串是否为数字：方法如下
+	public boolean isNumber(String str){
+		for(int i= 0;i<str.length();i++){
+			if(!Character.isDigit(str.charAt(i))){
+				return false;
+			}
+		}
+		return true;
 	}
 }
